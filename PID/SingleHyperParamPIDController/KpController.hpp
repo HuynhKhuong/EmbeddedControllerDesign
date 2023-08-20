@@ -1,6 +1,8 @@
 #ifndef __KPCONTROLLER_INCLUDED__
 #define __KPCONTROLLER_INCLUDED__
 
+#include "PIDControllerTemplate.hpp"
+
 namespace P_I_DController{
 /// \brief    Implementation of base template class: 1 HyperParam controller 
 /// \details  This implementation version would implement 1 HyperParam controller: Kp
