@@ -1,6 +1,8 @@
 #ifndef __KICONTROLLER_INCLUDED__
 #define __KICONTROLLER_INCLUDED__
 
+#include "PIDControllerTemplate.hpp"
+
 namespace P_I_DController
 {
 /// \brief    Implementation of base template class: 1 HyperParam controller 
