@@ -15,7 +15,7 @@ class PIDController: public Controller::ControllerInterface<inputSignalType, out
 {
 public: 
   ///SignalType is checked in Interface
-  using Base = Controller::ControllerInterface<inputSignalType, outputSignalType>
+  using Base = Controller::ControllerInterface<inputSignalType, outputSignalType>;
   PIDController():Base(){};
 
 protected: 
@@ -30,7 +30,7 @@ protected:
 /// \details  PID control algorithm: 
 ///           (pE*Error_value) + (ppE*pre_Error_value) + (pppE*pre_pre_Error_value)
 template<typename inputSignalType, typename outputSignalType, typename HyperParameterType>
-class PIDController<SignalType, HyperParameterType, HyperParameterType, HyperParameterType>: public Controller::ControllerInterface<inputSignalType, outputSignalType>
+class PIDController<inputSignalType, outputSignalType, HyperParameterType, HyperParameterType, HyperParameterType>: public Controller::ControllerInterface<inputSignalType, outputSignalType>
 {
 public: 
   using Base = Controller::ControllerInterface<inputSignalType, outputSignalType>;
@@ -59,9 +59,9 @@ public:
     return calculatedControlOutput;
   }
 
-  void setKp(HyperParameterType _Kp){Kp = _Kp}
-  void setKi(HyperParameterType _Ki){Ki = _Ki}
-  void setKd(HyperParameterType _Kd){Kd = _Kd}
+  void setKp(HyperParameterType _Kp){Kp = _Kp;}
+  void setKi(HyperParameterType _Ki){Ki = _Ki;}
+  void setKd(HyperParameterType _Kd){Kd = _Kd;}
 
   void enableController(){isControllerDisabled = false;}
   void disableController(){isControllerDisabled = true;}
