@@ -25,7 +25,12 @@ public:
   ControllerInterface():outputSignal(0.0f), inputSignal(0.0f){} 
   //virtual ~ControllerInterface();
 
+  /// \brief  getOutput would compute the controlling signal based on theory algorithm and error gap between input/response signal
+  /// \note   this function would only return the control signal based on theory. Hence its datatype would be fixed to float type
+  ///         Further output signal modification to match with controlling target would be designed by user (outputSignalType)
+  /// \return calculatedOutput from the theory PID calculation
   virtual float getOutput() = 0;
+
   virtual void getSystemResponse() = 0; 
   virtual void setInput(inputsignalType _inputSignal)
   {
