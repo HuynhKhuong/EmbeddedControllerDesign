@@ -40,6 +40,13 @@ public:
     }
     return Base::calculatedControlOutput;
   } 
+  void reset() override
+  {
+    disableController();
+    preErrorGap = 0.0f;
+    errorGap = 0.0f;
+    Base::calculatedControlOutput = 0.0f;
+  }
 
   void enableController(){isControllerDisabled = false;}
   void disableController(){isControllerDisabled = true;}

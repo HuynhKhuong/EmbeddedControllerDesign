@@ -27,17 +27,23 @@ public:
     }
     else 
     {
-      Base::errorGap = static_cast<float>(Base::inputSignal) - static_cast<float>(Base::systemResponse);
-      Base::calculatedControlOutput = Base::hyperParam * Base::errorGap;
+      errorGap = static_cast<float>(Base::inputSignal) - static_cast<float>(Base::systemResponse);
+      Base::calculatedControlOutput = Base::hyperParam * errorGap;
     }
 
     return Base::calculatedControlOutput;
   } 
  
+  void reset() override
+  {
+    disableController();
+  }
+
   void enableController(){isControllerDisabled = false;}
   void disableController(){isControllerDisabled = true;}
 
 private: 
+  inputSignalType errorGap{0.0f};
   bool isControllerDisabled{false};
 };
 } //End of namespace P_I_DController
