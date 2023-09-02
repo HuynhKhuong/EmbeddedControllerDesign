@@ -65,7 +65,6 @@ public:
       if(calculatedControlOutput > controlOutputMaxValue) calculatedControlOutput = controlOutputMaxValue; 
       if(calculatedControlOutput < controlOutputMinValue) calculatedControlOutput = controlOutputMinValue; 
 
-      Base::outputSignal = calculatedControlOutput;
       prepreErrorGap = preErrorGap;
       preErrorGap = errorGap;
 

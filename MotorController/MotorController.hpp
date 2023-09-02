@@ -50,7 +50,6 @@ public:
 protected: 
   const uint16_t PWMMaxValue; 
   const uint16_t PWMMinValue;
-  uint16_t outputPWMValue{0U};
 
   DCMotor::DCMotorSpecification* const motorModel; ///  and motor target 
   MotorSystemInterface::DCMotorInterface* const SystemInterface; ///MotorInterface of the Embedded System
@@ -121,7 +120,7 @@ public:
     calculatedPWMValue  = (calculatedPWMValue > static_cast<float>(Base::PWMMaxValue))?(static_cast<float>(Base::PWMMaxValue)):(calculatedPWMValue);
     calculatedPWMValue  = (calculatedPWMValue < static_cast<float>(Base::PWMMinValue))?(static_cast<float>(Base::PWMMinValue)):(calculatedPWMValue);
 
-    Base::outputPWMValue = calculatedPWMValue;
+    Base::outputSignal= calculatedPWMValue;
 
     return calculatedPWMValue;
   }
