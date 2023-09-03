@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include "MotorSpec.hpp"
+#include "MotorSystemInterface.hpp"
 
 namespace MotorController{
 /// \brief    Motor Controller designed as the top mix-in layer 
@@ -22,10 +23,10 @@ public:
   using Base = BaseController;
 
   template<typename... ParamsPack>
-  DCMotorController(uint16_t _PWMMaxValue = 65535U, uint16_t _PWMMinValue = 0U, const DCMotor::DCMotorSpecification& _motorModel, 
-                          const MotorSystemInterface::DCMotorInterface& _SystemInterface, ParamsPack... params) : 
+  DCMotorController(uint16_t _PWMMaxValue, uint16_t _PWMMinValue, DCMotor::DCMotorSpecification& _motorModel, 
+                          MotorSystemInterface::DCMotorInterface& _SystemInterface, ParamsPack... params) : 
                           Base(params...), PWMMaxValue(_PWMMaxValue), PWMMinValue(_PWMMinValue), 
-                          motorModel(&(_motorModel)), SystemInterface(&(SystemInterface)){}
+                          motorModel(&(_motorModel)), SystemInterface(&(_SystemInterface)){}
 
   /// \note     There are 2 variants of Motor Controller: Velocity and Position
   ///           getSystemResponse and getOutput differs between 2 variants. Therefore, getSystemResponse would be left blank and 
@@ -37,7 +38,7 @@ public:
 
   void triggerPWMPin()
   {
-    SystemInterface->outputPWMControlSignal(outputPWMValue);
+    SystemInterface->outputPWMControlSignal(Base::outputSignal);
   }
 
   /// \brief  Reset all information of the Motor Interface and the Motor Controller 
@@ -76,7 +77,7 @@ public:
   using Base = DCMotorController<BaseController>;
 
   template<typename... ParamPack>
-  MotorVelocityController(ParamPack... params): Base(params){} 
+  MotorVelocityController(ParamPack... params): Base(params...){} 
 
   void getSystemResponse() override
   {
@@ -96,11 +97,11 @@ public:
   float getOutput() override
   {
     float calculatedOutput{0.0f};
-    uint16_t calculatedPWMValue{0.0f};
+    uint16_t calculatedPWMValue{0U};
 
     getSystemResponse();
 
-    calculatedOuptut = Base::getOutput();
+    calculatedOutput = Base::getOutput();
 
 
     /// Boundaries limit
@@ -114,7 +115,7 @@ public:
     }
 
     /// Convert output signal to PWM value based on converted rate of Motor's Vrms and PWM value
-    calculatedPWMValue = convertPhysicalToPWMValue(calculatedOutput);
+    calculatedPWMValue = Base::convertPhysicalToPWMValue(calculatedOutput);
 
     /// Boundaries limit 
     calculatedPWMValue  = (calculatedPWMValue > static_cast<float>(Base::PWMMaxValue))?(static_cast<float>(Base::PWMMaxValue)):(calculatedPWMValue);

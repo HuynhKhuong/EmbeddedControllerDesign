@@ -34,7 +34,7 @@ class PIDController<inputSignalType, outputSignalType, HyperParameterType, Hyper
 {
 public: 
   using Base = Controller::ControllerInterface<inputSignalType, outputSignalType>;
-  PIDController(HyperParameterType _Kp, HyperParameterType _Ki, HyperParameterType _Kd, float _sampleTime
+  PIDController(HyperParameterType _Kp, HyperParameterType _Ki, HyperParameterType _Kd, float _sampleTime,
                 float _controlOutputMaxValue, float _controlOutputMinValue): 
                 Base(), Kp(_Kp), Ki(_Ki), Kd(_Kd), sampleTime(_sampleTime), controlOutputMaxValue(_controlOutputMaxValue),
                                                                             controlOutputMinValue(_controlOutputMinValue){}
@@ -88,15 +88,15 @@ public:
   void enableController(){isControllerDisabled = false;}
   void disableController(){isControllerDisabled = true;}
 
-private: 
+protected: 
   const float controlOutputMaxValue;
   const float controlOutputMinValue;
 
   bool isControllerDisabled{false};
 
-  inputSignalType errorGap{0.0f};
-  inputSignalType preErrorGap{0.0f};
-  inputSignalType prepreErrorGap{0.0f};
+  inputSignalType errorGap;
+  inputSignalType preErrorGap;
+  inputSignalType prepreErrorGap;
 
   float calculatedControlOutput{0.0f};
   float sampleTime{0.0f};
