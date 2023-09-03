@@ -8,7 +8,6 @@ namespace P_I_DController{
 /// \details  This implementation version would implement 1 HyperParam controller: Kp
 ///           In this controller, the output signal would have linear relationship with input signal: 
 ///                             Output = Input * Kp
-/// \todo     move getSystemResponse implementation down to lower level as it is hardware specific
 template <typename inputSignalType, typename outputSignalType, typename HyperParamType = float>
 class KpController: public PIDController<inputSignalType, outputSignalType, HyperParamType>
 {

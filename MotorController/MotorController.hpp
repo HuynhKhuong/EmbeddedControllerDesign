@@ -15,6 +15,8 @@ namespace MotorController{
 ///           Motor Controller would control 2 target types of motor
 ///           - Velocity 
 ///           - Position
+/// \note     As Motor Controller works on signal type uint16_t, input & output signal type of the controller (lower mix-in layer) 
+///           must be uint16_t type
 
 template <class BaseController> 
 class DCMotorController: public BaseController
@@ -118,8 +120,8 @@ public:
     calculatedPWMValue = Base::convertPhysicalToPWMValue(calculatedOutput);
 
     /// Boundaries limit 
-    calculatedPWMValue  = (calculatedPWMValue > static_cast<float>(Base::PWMMaxValue))?(static_cast<float>(Base::PWMMaxValue)):(calculatedPWMValue);
-    calculatedPWMValue  = (calculatedPWMValue < static_cast<float>(Base::PWMMinValue))?(static_cast<float>(Base::PWMMinValue)):(calculatedPWMValue);
+    calculatedPWMValue  = (calculatedPWMValue > Base::PWMMaxValue)?(Base::PWMMaxValue):(calculatedPWMValue);
+    calculatedPWMValue  = (calculatedPWMValue < Base::PWMMinValue)?(Base::PWMMinValue):(calculatedPWMValue);
 
     Base::outputSignal= calculatedPWMValue;
 
