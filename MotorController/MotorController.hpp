@@ -51,8 +51,8 @@ public:
   }
 
 protected: 
-  const uint16_t PWMMaxValue; 
-  const uint16_t PWMMinValue;
+  const uint32_t PWMMaxValue; 
+  const uint32_t PWMMinValue;
 
   DCMotor::DCMotorSpecification* const motorModel; ///  and motor target 
   MotorSystemInterface::DCMotorInterface* const SystemInterface; ///MotorInterface of the Embedded System
@@ -60,12 +60,12 @@ protected:
   /// \brief Private function used for output calculation
   /// \details  Private function converts from physical output value to PWM value
   /// \note     input param must be posivite
-  uint16_t convertPhysicalToPWMValue(float physicalValue)
+  uint32_t convertPhysicalToPWMValue(float physicalValue)
   {
-    uint16_t result{0U};
+    uint32_t result{0U};
     if(physicalValue >= 0.0f)
     {
-      result = static_cast<uint16_t>((physicalValue*PWMMaxValue)/motorModel->Vrms);
+      result = static_cast<uint32_t>((physicalValue*PWMMaxValue)/motorModel->Vrms);
     }
     return result;
   }
@@ -99,7 +99,7 @@ public:
   float getOutput() override
   {
     float calculatedOutput{0.0f};
-    uint16_t calculatedPWMValue{0U};
+    uint32_t calculatedPWMValue{0U};
 
     getSystemResponse();
 
